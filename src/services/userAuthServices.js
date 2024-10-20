@@ -1,60 +1,50 @@
 import userAuthModel from '../models/userAuthModel.js'
+import bcrypt from "bcrypt"
 
 const userServices = {
-    async getAllUsers() {
-        try {
-            let allUsers = await userAuthModel.find()
-            return allUsers
-        } catch (error) {
-            return error
-        }
+    // Crea usuarios y causa que la contraseña sea hasheada
+    async create(data){
+        const passwordHash = bcrypt.hashSync(data.password || "", 10);
+        data.password = passwordHash;
+        return await userAuthModel.create(data)
+    },
 
+    //chechea la contraseña
+    checkPassword(password, passwordHash){
+        return bcrypt.compareSync(password || "", passwordHash)
     },
-    async getOneUserByID(id) {
+
+    //Traer usuario por email 
+    async getByEmail (data) {
         try {
-            let user = await userAuthModel.findById({ id })
-            if (!user) throw new Error(`The provided ID doesn't match any registered IDs`)
-            return user
-        } catch (error) {
-            return error
+            console.log(data, "data getbyEmail service")
+            return await userAuthModel.findOne({email:data})
+        } catch (error){
+            console.log(error, "error catch from getByEmail service")
         }
     },
-    async getOneUserByName(data) {
-        try {
-            let user = await userAuthModel.findOne({ firstName: data.firstName })
-            if (!user) throw new Error('No users found with the provided name')
-            return user
-        } catch (error) {
-            return error
-        }
+
+    // Trae un usuario por id
+    async getUserById(id) {
+        return await userAuthModel.findById({_id:id})
     },
-    async updateUser(id, data, ){
-        try {
-            let updatedUser = await userAuthModel.findByIdAndUpdate( {id}, data, {new:true} )
-            if(!updatedUser) throw new Error( `The provided ID doesn't match any registered users, couldn't update` )
-            return updatedUser
-        } catch (error) {
-            return error
-        }
+
+    // trae a todos los usuarios JSON
+    async getAllUsers (){
+        return await userAuthModel.find()
     },
-    async deleteUser(){
-        try {
-            let user = await userAuthModel.findByIdAndDelete( {id} )
-           if(!user) throw new Error( `The provided ID doesn't match any registered IDs, couldn't delete` )
-            return user
-        } catch (error) {
-            return error
-        }
+
+    //update usuario 
+    async updateUser(id, data){
+        let userUpdate = await userAuthModel.findByIdAndUpdate(id, data, {new:true})
+        return userUpdate
     },
-    async createOneUser( data ){
-        try {
-            let user = await userAuthModel.create( data )
-            if(!user) throw new Error( `User couldn't be created` )
-            return user
-        } catch (error) {
-            return error
-        }
+
+    //borrar usuario
+    async deleteUser(id){
+        return await userAuthModel.findByIdAndDelete({_id:id})
     }
+
 }
 
 export default userServices

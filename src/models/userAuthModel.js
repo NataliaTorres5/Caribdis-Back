@@ -1,9 +1,12 @@
 import { model, Schema } from "mongoose";
 
 const userSchema = new Schema({
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
+    firstName: { type: String, required: true, max:40, min:4, },
+    lastName: { type: String, required: true, max:40, min:4, },
     email: { type: String, required: true, unique: true },
+    country:{type:String},
+    address:{type:String},
+    img:{type:String},
     password: { type: String, required: true },
     role: { type: String, enum: ['admin', 'user'], default: 'user' },
 })
