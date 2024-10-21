@@ -2,7 +2,7 @@
 function userDTO(user, token){
     return {
         data:{
-            "id": user._id,  
+            "id": user.id,  
             "firstName": user.firstName,
             "lastName": user.lastName,
             "email": user.email,

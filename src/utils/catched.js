@@ -3,7 +3,7 @@
 
 function catched(fn){
     return function(req, res, next){
-        fn(req, res).catched(err=> next(err, "error atrapado por en catched js"))
+        fn(req, res).catch(err=> next(err, "error atrapado por en catched js"))
     }
 }
 

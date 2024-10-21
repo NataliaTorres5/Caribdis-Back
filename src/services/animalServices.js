@@ -1,37 +1,43 @@
 import animalModel from "../models/animalModel.js";
 
+
 const animalServices = {
   async getAllAnimals() {
+
     try {
-      let allAnimals = await animalModel.find();
-      return allAnimals;
+      return await animalModel.find()
     } catch (error) {
-      return error;
+      console.log(error, "no se encuentran animales")
+      
     }
+   
   },
 
   async getOneById(id) {
     try {
-      let animal = await animalModel.findById({ id });
-      if (!animal) throw new Error(`The Id does not match`);
-      return animal;
+      let animal = await animalModel.findById(id)
+      return animal
     } catch (error) {
-      return error;
+      console.log(error, "no se puede traer animal por id")
     }
+   
   },
 
   async createOneAnimal(data) {
     try {
-      let newAnimal = await animalModel.create({ data });
-      if (!newAnimal) throw new Error(`The animal couldn't be created`);
+      let newAnimal = await animalModel.create(data);
+      if (!newAnimal) throw new Error(` No se pudo crear el animal`);
+      return newAnimal
     } catch (error) {
-      return error;
+      console.log(error, "error no se pudo crear animal")
     }
   },
 
   async deleteOneAnimal(id) {
+    console.log(id, "id que se pasa a deleteone en servicios")
+
     try {
-      let animal = await animalModel.findByIdAndDelete({ id });
+      let animal = await animalModel.findByIdAndDelete(id);
       if (!animal)
         throw new Error(`couldn't find the animal,  we couldn't delete`);
       return animal;

@@ -1,54 +1,49 @@
 import animalServices from "../services/animalServices.js";
+import catched from "../utils/catched.js";
+import customError from "../utils/customError.js";
+import httpResponse from "../utils/httpResponse.js";
 
 const animalController = {
   async getAllAnimals(req, res) {
-    try {
+   
       let allAnimals = await animalServices.getAllAnimals();
-      res.status(200).json({ allAnimals });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+      httpResponse(res, 200, allAnimals )
+     
   },
 
   async getOneById(req, res) {
-    try {
-      let animal = await animalServices.getOneById(req.params.id);
-      res.stats(200).json({ animal });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    let animals = await animalServices.getOneById(req.params.id);
+    httpResponse(res, 200, animals);
   },
 
   async createOneAnimal(req, res) {
-    try {
-      let newAnimal = await animalServices.createOneAnimal(req.body);
-      res.status(201).json({ newAnimal });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    console.log("new animal data" ,req.body);
+    let newAnimal = await animalServices.createOneAnimal(req.body);
+    console.log(newAnimal, "animal created");
+    httpResponse(res, 200, newAnimal );
   },
 
   async deleteOneAnimal(req, res) {
-    try {
-      let animal = await animalServices.deleteOneAnimal(req.params.id);
-      res.status(200).json({ animal });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    console.log(req.params.id, "req params desde controller animal")
+    let animal = await animalServices.deleteOneAnimal(req.params.id);
+    httpResponse(res, 200, animal);
   },
 
   async updateOneAnimal(req, res) {
-    try {
-      let animal = await productServices.updateOneAnimal(
-        req.param.id,
-        req.body,
-        { new: true }
-      );
-      res.status(200).json({ animal });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    let animal = await animalServices.updateOneAnimal(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    httpResponse(res, 200, animal);
   },
 };
 
-export default animalController;
+export default {
+  getAllAnimals: catched(animalController.getAllAnimals), 
+  getOneById: catched(animalController.getOneById),
+  createOneAnimal: catched(animalController.createOneAnimal),
+  deleteOneAnimal: catched(animalController.deleteOneAnimal),
+  updateOneAnimal: catched(animalController.updateOneAnimal)
+
+};

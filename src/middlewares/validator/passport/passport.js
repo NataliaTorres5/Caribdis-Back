@@ -1,26 +1,29 @@
-import passport from "passport";
-import dotenv from "dotenv"
-import userServices from "../../../services/userAuthServices.js";
-import { Strategy, ExtractJwt } from "passport-jwt";
 
-dotenv.config()
+import passport from "passport";
+import dotenv from "dotenv";
+import userServices from "../../../services/userServices.js";
+dotenv.config();
+import {Strategy, ExtractJwt} from "passport-jwt"
+
+
 
 const options = {
-    jwtFromRequest: ExtractJwt-fromAuthHeaderAsBearenToken(),
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.SECRET_KEY,
 }
 
-const authenthicate = async (payload, done) =>{ //done parecido a concepto de next
+const authenticate = async (payload, done) => { //parecido al concepto de next
+
     try {
-        
-        console.log(payload, "payload passport js")
-        const user = await userServices.getByEmail(payload.email)
+        console.log(payload)
+       const user = await  userServices.getByEmail(payload.email)
         if(!user) return done(null, false);
         return done(null, user);
-    } catch (error) {
+   } catch (error) {
+    return done(error, false);
+   }
 
-        return done(error, false);  
-    }
 }
 
-export default passport.use(new Strategy(options, authenthicate));
+
+export default passport.use(new Strategy(options, authenticate));
