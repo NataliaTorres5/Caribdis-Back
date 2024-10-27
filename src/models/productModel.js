@@ -5,6 +5,8 @@ const  productSchema = new Schema({
     description: { type: String, required: true },
     category: { type: String},
     image: { type: String},
+    date: {type: Date, default: Date.now},
+    price: {type: Number}
 })
 
 const productModel = model('Product', productSchema)

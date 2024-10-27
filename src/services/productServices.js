@@ -6,23 +6,25 @@ const productServices = {
       let allProducts = await productModel.find();
       return allProducts;
     } catch (error) {
+      console.log(error, "no se encuentran producto")
       return error;
     }
   },
 
   async getOneById(id) {
     try {
-      let product = await productModel.findOneById({ id });
+      let product = await productModel.findOneById( id );
       if (!product) throw new Error(`The Id does not match`);
       return product;
     } catch (error) {
+      console.log(error, "no se encuentran producto")
       return error;
     }
   },
    
   async createOneProduct(data){
     try {
-        let newProduct = await productModel.create({data})
+        let newProduct = await productModel.create(data)
         if(!newProduct) throw new Error(`The product couldn't be created`)
     } catch (error) {
         return error;
@@ -40,10 +42,12 @@ const productServices = {
     },
     async updateOneProduct(id, data, newTrue) {
         try {
-            let product = await productModel.findByIdAndUpdate({_id:id}, data, {new:newTrue})
+            let product = await productModel.findByIdAndUpdate({ _id: id }, data, {
+              new: newTrue,
+            })
             if (!product) throw new error (`Could't find the product, we couldn't update`)
         } catch (error) {
-            return(error)
+            return error
         }
       }
   }

@@ -1,54 +1,49 @@
 import productServices from "../services/productServices.js";
 
+import catched from "../utils/catched.js";
+import httpResponse from "../utils/httpResponse.js";
+
 const productController = {
   async getAllProducts(req, res) {
-    try {
-      let allProducts = await productServices.getAllProducts();
-      res.status(200).json({ allProducts });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+   
+      let allAnimals = await productServices.getAllProducts();
+      httpResponse(res, 200, allAnimals )
+     
   },
 
   async getOneById(req, res) {
-    try {
-      let product = await productServices.getOneById(req.params.id);
-      res.stats(200).json({ product });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    let animals = await productServices.getOneById(req.params.id);
+    httpResponse(res, 200, animals);
   },
 
   async createOneProduct(req, res) {
-    try {
-      let newProduct = await productServices.createOneProduct(req.body);
-      res.status(201).json({ newProduct });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    console.log("new animal data" ,req.body);
+    let newAnimal = await productServices.createOneProduct(req.body);
+    console.log(newAnimal, "producto created");
+    httpResponse(res, 200, newAnimal );
   },
 
   async deleteOneProduct(req, res) {
-    try {
-      let product = await productServices.deleteOneProduct(req.params.id);
-      res.status(200).json({ product });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    console.log(req.params.id, "req params desde controller producto")
+    let animal = await productServices.deleteOneProduct(req.params.id);
+    httpResponse(res, 200, animal);
   },
 
   async updateOneProduct(req, res) {
-    try {
-      let product = await productServices.updateOneProduct(
-        req.param.id,
-        req.body,
-        { new: true }
-      );
-      res.status(200).json({ product });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    let animal = await productServices.updateOneProduct(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    httpResponse(res, 200, animal);
   },
 };
 
-export default productController;
+export default {
+  getAllProducts: catched(productController.getAllProducts), 
+  getOneById: catched(productController.getOneById),
+  createOneProduct: catched(productController.createOneProduct),
+  deleteOneProduct: catched(productController.deleteOneProduct),
+  updateOneProduct: catched(productController.updateOneProduct)
+
+};

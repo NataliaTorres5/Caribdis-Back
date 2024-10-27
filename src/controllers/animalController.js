@@ -1,6 +1,5 @@
 import animalServices from "../services/animalServices.js";
 import catched from "../utils/catched.js";
-import customError from "../utils/customError.js";
 import httpResponse from "../utils/httpResponse.js";
 
 const animalController = {
