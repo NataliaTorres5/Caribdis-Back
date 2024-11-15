@@ -20,7 +20,7 @@ const productController = {
     console.log("new product added", req.body);
     let newProduct = await productServices.createOneProduct(req.body);
     console.log(newProduct, "producto created");
-    httpResponse(res, 200, newAnimal );
+    httpResponse(res, 200, newProduct);
   },
 
   async deleteOneProduct(req, res) {
