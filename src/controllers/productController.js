@@ -6,36 +6,36 @@ import httpResponse from "../utils/httpResponse.js";
 const productController = {
   async getAllProducts(req, res) {
    
-      let allAnimals = await productServices.getAllProducts();
-      httpResponse(res, 200, allAnimals )
+      let allproducts= await productServices.getAllProducts();
+      httpResponse(res, 200, allproducts )
      
   },
 
   async getOneById(req, res) {
-    let animals = await productServices.getOneById(req.params.id);
-    httpResponse(res, 200, animals);
+    let products = await productServices.getOneById(req.params.id);
+    httpResponse(res, 200, products);
   },
 
   async createOneProduct(req, res) {
-    console.log("new animal data" ,req.body);
-    let newAnimal = await productServices.createOneProduct(req.body);
-    console.log(newAnimal, "producto created");
+    console.log("new product added", req.body);
+    let newProduct = await productServices.createOneProduct(req.body);
+    console.log(newProduct, "producto created");
     httpResponse(res, 200, newAnimal );
   },
 
   async deleteOneProduct(req, res) {
     console.log(req.params.id, "req params desde controller producto")
-    let animal = await productServices.deleteOneProduct(req.params.id);
-    httpResponse(res, 200, animal);
+    let product = await productServices.deleteOneProduct(req.params.id);
+    httpResponse(res, 200, product);
   },
 
   async updateOneProduct(req, res) {
-    let animal = await productServices.updateOneProduct(
+    let product = await productServices.updateOneProduct(
       req.params.id,
       req.body,
       { new: true }
     );
-    httpResponse(res, 200, animal);
+    httpResponse(res, 200, product);
   },
 };
 
