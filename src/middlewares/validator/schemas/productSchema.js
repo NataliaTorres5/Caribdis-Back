@@ -9,6 +9,7 @@ const productSchema = joi
     category: joi.string().required(),
     image: joi.string(),
     price: joi.number(),
+    stock: joi.number(),
 
   })
   .messages({

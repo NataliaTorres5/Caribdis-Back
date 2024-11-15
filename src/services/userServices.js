@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'; 
+
 import userModel from '../models/userModel.js'
 import bcrypt from "bcrypt";
 import customError from '../utils/customError.js';
