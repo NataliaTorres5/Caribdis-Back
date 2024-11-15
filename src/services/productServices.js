@@ -13,7 +13,7 @@ const productServices = {
 
   async getOneById(id) {
     try {
-      let product = await productModel.findOneById( id );
+      let product = await productModel.findById(id);
       if (!product) throw new Error(`The Id does not match`);
       return product;
     } catch (error) {
