@@ -34,7 +34,7 @@ const productServices = {
 
   async deleteOneProduct(id) {
     try {
-       let product = await productServices.findByIdAndDelete(id);
+       let product = await productModel.findByIdAndDelete(id);
        if(!product) throw new Error(`Couldn't delete the product`); 
        return product
     } catch (error) {
