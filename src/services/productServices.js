@@ -23,7 +23,7 @@ const productServices = {
   },
    
   async createOneProduct(data){
-    console.log(data)
+    console.log(data, "datos de ceate")
     try {
         let newProduct = await productModel.create(data)
         if(!newProduct) throw new Error(`The product couldn't be created`)
