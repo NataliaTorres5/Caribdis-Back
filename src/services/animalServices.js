@@ -37,7 +37,7 @@ const animalServices = {
     console.log(id, "id que se pasa a deleteone en servicios")
 
     try {
-      let animal = await animalModel.findByIdAndDelete(id);
+      let animal = await animalModel.findByIdAndDelete({ _id: id });
       if (!animal)
         throw new Error(`couldn't find the animal,  we couldn't delete`);
       return animal;
